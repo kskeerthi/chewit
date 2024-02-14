@@ -44,9 +44,9 @@
     object-fit: cover;
 }
 
-.search {
+/* .search {
     padding: 20px 0px 20px 0px;
-}
+} */
 
 .res-containers {
     display: flex;
@@ -56,4 +56,30 @@
 }
 .filter {
     margin: 20px;
+    display: flex;
+
+}
+.filter-btn {
+    margin-left: 20px;
+}
+.shimmer-container {
+    display: flex;
+    flex-wrap: wrap;
+   
+}
+.shimmer-cards {
+    background-color: rgb(218, 218, 218);
+    width: 200px;
+    height: 300px;
+    padding: 10px;
+    margin-bottom: 30px;
+    margin-left: 5px;
+    
+}
+
+.login {
+    padding: 10px;
+    cursor: pointer;
+    width: 80px;
+    height: 60px;
 }
