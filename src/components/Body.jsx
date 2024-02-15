@@ -1,14 +1,15 @@
 import React from 'react';
 import RestrauntCard from './RestrauntCard';
 import Shimmer from './Shimmer';
-import resList from '../utils/mockdata';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import useOnlinestatus from '../utils/useOnlinestatus';
 
 
 const Body = () => {
   const [listOfRestraunts, setListofRestraunts] = useState([]);
   const [filteredRestraunts, setfilteredRestraunts] = useState([]);
-  const [searchText,  setsearchText ] = useState("");
+  const [searchText, setsearchText] = useState("");
   useEffect(() => {
     fetchData()
   }, [])
@@ -26,7 +27,11 @@ const Body = () => {
 
 
   };
-
+  const onlineStatus = useOnlinestatus();
+  if (onlineStatus == false)
+    return (
+      <h1>Looks like you are offline!!!Please check internet connection.</h1>
+    );
   return listOfRestraunts.length === 0 ? (
     <Shimmer />
   ) : (
@@ -35,7 +40,7 @@ const Body = () => {
         <div className='search'>
           <input type="text" className='search-box' value={searchText} onChange={(e) => {
             setsearchText(e.target.value);
-          }}/>
+          }} />
           <button onClick={() => {
             console.log(searchText);
             const filteredRestaurants = listOfRestraunts.filter((res) => res.info.name.toLowerCase().includes(searchText.toLowerCase()));
@@ -43,18 +48,18 @@ const Body = () => {
           }}>Search</button>
         </div>
         <div className='button-filter'>
-        <button className='filter-btn' onClick={() => {
+          <button className='filter-btn' onClick={() => {
 
-          const filteredList = listOfRestraunts.filter(
-            (res) => res.info.avgRating > 4.2
-          );
-          setfilteredRestraunts(filteredList);
-        }}>Top Rated Restraunts</button>
-      </div>
+            const filteredList = listOfRestraunts.filter(
+              (res) => res.info.avgRating > 4.2
+            );
+            setfilteredRestraunts(filteredList);
+          }}>Top Rated Restraunts</button>
+        </div>
       </div>
       <div className="res-containers">
         {filteredRestraunts.map((restraunt) => (
-          <RestrauntCard key={restraunt.info.id} resData={restraunt} />
+          <Link key={restraunt.info.id} to={'/restaurant/' + restraunt.info.id}><RestrauntCard key={restraunt.info.id} resData={restraunt} /></Link>
         ))}
 
         {/* <RestrauntCard resName="Starbucks" cuisine="coffee, sandwitches, cold coffee"/> */}
