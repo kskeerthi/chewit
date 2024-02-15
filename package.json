@@ -4,7 +4,7 @@
   "description": "This is food delivery react app by keerthi",
   "main": "App.js",
   "scripts": {
-    "start":"parcel index.html",
+    "start": "parcel index.html",
     "build": "parcel build index.html",
     "test": "jest"
   },
@@ -21,9 +21,10 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0"
   },
-  "browserslist" : [
+  "browserslist": [
     "all chrome versions",
     "all firefox versions",
     "all ie versions"
