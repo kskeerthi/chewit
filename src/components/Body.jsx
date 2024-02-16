@@ -1,5 +1,5 @@
 import React from 'react';
-import RestrauntCard from './RestrauntCard';
+import RestrauntCard , {withFlatDealLabel} from './RestrauntCard';
 import Shimmer from './Shimmer';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ const Body = () => {
   useEffect(() => {
     fetchData()
   }, [])
-
+  const RestaurantWithFlatDeal = withFlatDealLabel(RestrauntCard);
   console.log("Body rendered");
 
   const fetchData = async () => {
@@ -36,30 +36,38 @@ const Body = () => {
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter">
-        <div className='search'>
-          <input type="text" className='search-box' value={searchText} onChange={(e) => {
+      <div className="filter flex">
+        <div className='search m-4 p-4'>
+          <input type="text" className='border border-solid border-black' value={searchText} onChange={(e) => {
             setsearchText(e.target.value);
           }} />
-          <button onClick={() => {
-            console.log(searchText);
+          <button className="px-4 py-2 bg-green-100 m-4" onClick={() => {
             const filteredRestaurants = listOfRestraunts.filter((res) => res.info.name.toLowerCase().includes(searchText.toLowerCase()));
             setfilteredRestraunts(filteredRestaurants);
           }}>Search</button>
         </div>
-        <div className='button-filter'>
-          <button className='filter-btn' onClick={() => {
+        <div className='search m-4 p-4 flex items-center '>
+        <button className=" bg-gray-100 px-4 py-2 rounded-lg"  onClick={() => {
 
-            const filteredList = listOfRestraunts.filter(
-              (res) => res.info.avgRating > 4.2
-            );
-            setfilteredRestraunts(filteredList);
-          }}>Top Rated Restraunts</button>
-        </div>
+          const filteredList = listOfRestraunts.filter(
+            (res) => res.info.avgRating > 4.2
+          );
+          setfilteredRestraunts(filteredList);
+        }}>Top Rated Restraunts</button>
+
       </div>
-      <div className="res-containers">
+      </div>
+      <div className="res-containers flex flex-wrap">
+        
         {filteredRestraunts.map((restraunt) => (
-          <Link key={restraunt.info.id} to={'/restaurant/' + restraunt.info.id}><RestrauntCard key={restraunt.info.id} resData={restraunt} /></Link>
+          <Link key={restraunt.info.id} to={'/restaurant/' + restraunt.info.id}>
+          {(restraunt.info.avgRating >= 4.5) ? 
+          (<RestaurantWithFlatDeal  key={restraunt.info.id} resData={restraunt}/>
+          ) : 
+          (<RestrauntCard key={restraunt.info.id} resData={restraunt} />
+          )}
+          
+          </Link>
         ))}
 
         {/* <RestrauntCard resName="Starbucks" cuisine="coffee, sandwitches, cold coffee"/> */}
