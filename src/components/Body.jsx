@@ -1,20 +1,22 @@
 import React from 'react';
 import RestrauntCard , {withFlatDealLabel} from './RestrauntCard';
 import Shimmer from './Shimmer';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import useOnlinestatus from '../utils/useOnlinestatus';
+import userContext from '../utils/userContext';
 
 
 const Body = () => {
   const [listOfRestraunts, setListofRestraunts] = useState([]);
   const [filteredRestraunts, setfilteredRestraunts] = useState([]);
   const [searchText, setsearchText] = useState("");
+  const { loggedInUser, setUserName} = useContext(userContext);
+  
   useEffect(() => {
     fetchData()
   }, [])
   const RestaurantWithFlatDeal = withFlatDealLabel(RestrauntCard);
-  console.log("Body rendered");
 
   const fetchData = async () => {
     const data = await fetch(
@@ -55,6 +57,10 @@ const Body = () => {
           setfilteredRestraunts(filteredList);
         }}>Top Rated Restraunts</button>
 
+      </div>
+      <div className='search m-4 p-4 flex items-center '>
+        <label>Username: </label>
+      <input type="text" className='border border-solid border-black' value={loggedInUser} />
       </div>
       </div>
       <div className="res-containers flex flex-wrap">

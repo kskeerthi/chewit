@@ -1,15 +1,20 @@
 import ItemList from "./ItemList";
 
-const RestaurantCategory = (data) => {
-   
+const RestaurantCategory = ({data, showItems, setShowIndex}) => {
+  const handleClick = () => {
+    setShowIndex();
+    console.log("clicked");
+  };
+  
   return (
     <div>
-        <div className="w-6/12 bg-gray-50 shadow-lg p-4 m-auto mx-auto my-4 " >
-            <div className="flex justify-between">
-            <span>{data.data.title}({data.data.itemCards.length})</span>
+        <div className="w-6/12 bg-gray-50 shadow-lg p-4 m-auto mx-auto my-4" >
+            <div className="flex justify-between" onClick={handleClick}>
+            <span className="cursor-pointer">{data.title}({data.itemCards.length})</span>
             <span>🔽</span>
             </div>
-            <ItemList  items = {data.data.itemCards} />
+            
+            {showItems && <ItemList  items = {data.itemCards} />}
         </div>
         
 

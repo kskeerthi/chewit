@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { CDN_URL } from "../utils/constants";
+import userContext from "../utils/userContext";
 
   
 const RestrauntCard = (_props) => {
     const { resData } = _props;
+    const { loggedInUser } = useContext(userContext);
   return (
     <div className="res-card m-4 p-4 w-[260px] rounded-lg bg-gray-100 hover:bg-gray-200">
       <img
@@ -16,6 +18,7 @@ const RestrauntCard = (_props) => {
       <h4>{resData.info.costForTwo}</h4>
       <h4>{resData.info.sla.slaString}</h4>
       <h4> {resData.info.locality}</h4>
+      <h4>{ loggedInUser} </h4>
     </div>
   );
 };
